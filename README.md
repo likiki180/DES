@@ -7,7 +7,8 @@
 我们首先展示用户界面和输入输出不合法的情况。
 
 用户界面总览：
-![img_1.png](img_1.png)
+![img_1](https://github.com/likiki180/DES/assets/143941355/0c533d75-b3ab-4485-b826-3315814377b2)
+
 
 
 
@@ -16,12 +17,13 @@
 
 当输入的信息和密钥内容或者位数不合法时，会重新输入（图2，图3）：
 
-![img_2.png](img_2.png)
+![img_2](https://github.com/likiki180/DES/assets/143941355/b1b4e0ca-2df0-4571-b4cf-10c49fad890e)
 
 
 
 
-![img_7.png](img_7.png)
+![img_7](https://github.com/likiki180/DES/assets/143941355/54e65347-857f-4ccb-8851-02b53458f314)
+
 
 
 
@@ -34,7 +36,8 @@
 
 我们得到了下面的加密结果：
 
-![img_8.png](img_8.png)
+![img_8](https://github.com/likiki180/DES/assets/143941355/aafc48d9-90d8-459a-b74b-2de44b6f44f1)
+
 
 
 
@@ -44,7 +47,8 @@
 
 密钥：1101100111
 
-![img_9.png](img_9.png)
+![img_9](https://github.com/likiki180/DES/assets/143941355/8c9d320e-9d67-47ec-ac4a-bc72240ab979)
+
 
 
 
@@ -69,13 +73,14 @@
 
 
 我们程序的二进制明文加密测试：
+![img_18](https://github.com/likiki180/DES/assets/143941355/68301220-04e7-4ca5-bc2d-b817951b2d96)
 
-![img_18.png](img_18.png)
 
 
 我们程序的ASCII码明文加密测试：
 
-![img_19.png](img_19.png)
+![img_19](https://github.com/likiki180/DES/assets/143941355/96c5e454-bfd6-4576-b7d2-edd07faf23c8)
+
 
 
 交叉测试组的两个加密结果：
@@ -86,7 +91,8 @@
 密文为：
 i\
 
-![img_20.png](img_20.png)
+![img_20](https://github.com/likiki180/DES/assets/143941355/79a8e832-6c5d-4b4a-b36d-181fb28b443b)
+
 
 可以看出，我们和其他小组的交叉测试结果是一样的， 交叉测试通过！
 
@@ -110,12 +116,14 @@ i\
 
 
 
-![img_14.png](img_14.png)
+![img_14](https://github.com/likiki180/DES/assets/143941355/6659ac41-3994-48fe-ab67-efdd241267c3)
+
 
 
 面是对应的解密演示：
 
-![img_13.png](img_13.png)
+![img_13](https://github.com/likiki180/DES/assets/143941355/abd5db0a-28ca-4ea8-93bf-e86a0c39af35)
+
 
 
 解密成功，得到对应的明文，演示结束，第三关通过。
@@ -130,29 +138,35 @@ i\
 
 首先，我们展示单密文对破解功能：
 
-![img_15.png](img_15.png)
+![img_15](https://github.com/likiki180/DES/assets/143941355/aef541c4-48ee-4763-b9c1-336f39f268f4)
+
 
 进入破解界面：
-![img_25.png](img_25.png)
+![img_25](https://github.com/likiki180/DES/assets/143941355/8685192d-ea23-4d0f-8b3a-d5dffbcf1fb8)
 
 输入明文、密文对。
 
-![img_24.png](img_24.png)
+![img_24](https://github.com/likiki180/DES/assets/143941355/da9b1442-15a9-40e8-ac6c-688316418521)
+
 
 轻松得到破解结果。
 
-![img_23.png](img_23.png)
+![img_23](https://github.com/likiki180/DES/assets/143941355/2b9cb970-ce28-410f-8b64-c372dedf2d8c)
+
 
 然后，我们展示多密文对破解功能：
 
-![img_28.png](img_28.png)
+![img_28](https://github.com/likiki180/DES/assets/143941355/fe54b5a0-ff6f-44ea-a63c-7b27c359c99b)
+
 
 输入多组明密文对，注意以英文分号隔开。
 
-![img_27.png](img_27.png)
+![img_27](https://github.com/likiki180/DES/assets/143941355/83da8fad-a917-4ba9-9c4b-2145a75cb39e)
+
 
 轻松得到破解结果
-![img_26.png](img_26.png)
+![img_26](https://github.com/likiki180/DES/assets/143941355/768f9e8b-755e-4da1-a605-16809bf446e4)
+
 
 第四关测试通过。
 
@@ -170,9 +184,11 @@ i\
 
 下面解释问题二：
 
-![img_16.png](img_16.png)
+![img_16](https://github.com/likiki180/DES/assets/143941355/f741e4d3-42b0-4b56-9e13-493713512931)
 
-![img_17.png](img_17.png)
+
+![img_17](https://github.com/likiki180/DES/assets/143941355/b3fdd2a7-ace2-4c1e-8a52-0abdda9543d8)
+
 
 同时，如上图，我们使用明文：10111001，密钥1001100011和1010101101，都得到了密文01110011。
 
