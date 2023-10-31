@@ -170,7 +170,7 @@
 选择对应的中间相遇攻击选项：
 ![image](https://github.com/likiki180/DES/assets/143941355/935a84cb-c62c-431f-bed7-d3b2eefac80e)
 
-按要求输入我们已知的明文和密文对：
+按要求输入我们已知的明文和密文对，假如说我们现在知道两对：
 
 ![image](https://github.com/likiki180/DES/assets/143941355/137e0597-a5bb-4c8f-9aa5-f4a3bb20b266)
 
@@ -182,6 +182,11 @@
 
 ![image](https://github.com/likiki180/DES/assets/143941355/d23f7c88-452a-44cf-93fa-18e4bfc74bab)
 
+刚才的两对是我提前设计好的，所以能破解。如果随机给出明密文对，也不总是能破解，如下图：
+
+![image](https://github.com/likiki180/DES/assets/143941355/c3645f1a-8b0d-4d7e-9eda-a86f43aa7714)
+
+4.2测试通过
 
 
 
@@ -189,53 +194,54 @@
 
 #####4.3 三重加密将S-AES算法通过三重加密进行扩展，我们按照按照32 bits密钥Key(K1+K2)的模式进行三重加密解密
 
-
-在第4关中，我们尝试使用暴力破解的方法来找到正确的密钥。
-
-对于一份已知的明文密文文对，我们得到了多份密钥的解，并使用单线程与多线程的方式对比破解效率。
-
-在软件界面上选择对应的破解功能：
-
-首先，我们展示单密文对破解功能：
-
-![img_15](https://github.com/likiki180/DES/assets/143941355/aef541c4-48ee-4763-b9c1-336f39f268f4)
+选择对应的三重加密选项：
+![image](https://github.com/likiki180/DES/assets/143941355/b17bde3d-3423-42c1-b824-2c9921612682)
 
 
-进入破解界面：
-![img_25](https://github.com/likiki180/DES/assets/143941355/8685192d-ea23-4d0f-8b3a-d5dffbcf1fb8)
+按要求输入我们已知的明文和密文对
+![image](https://github.com/likiki180/DES/assets/143941355/0eeb7372-665c-499b-9af1-1b81a7c2b873)
 
-输入明文、密文对。
+明文：0000111100001111
+2个密钥：0100101011110101;1101011100101000
 
-![img_24](https://github.com/likiki180/DES/assets/143941355/da9b1442-15a9-40e8-ac6c-688316418521)
+加密结果：
+![image](https://github.com/likiki180/DES/assets/143941355/b407d6d4-eb37-48fb-a30e-115d65a6ec43)
 
+加密结果为：1010000110001111
 
-轻松得到破解结果。
+对应的解密：
+![image](https://github.com/likiki180/DES/assets/143941355/6a4cb077-6137-49d2-ba9c-2b6bc0b5d4be)
 
-![img_23](https://github.com/likiki180/DES/assets/143941355/2b9cb970-ce28-410f-8b64-c372dedf2d8c)
+成功得到刚才的原文
 
-
-然后，我们展示多密文对破解功能：
-
-![img_28](https://github.com/likiki180/DES/assets/143941355/fe54b5a0-ff6f-44ea-a63c-7b27c359c99b)
-
-
-输入多组明密文对，注意以英文分号隔开。
-
-![img_27](https://github.com/likiki180/DES/assets/143941355/83da8fad-a917-4ba9-9c4b-2145a75cb39e)
+4.3测试通过
 
 
-轻松得到破解结果
-![img_26](https://github.com/likiki180/DES/assets/143941355/768f9e8b-755e-4da1-a605-16809bf446e4)
+
+
+
+
 
 
 第四关测试通过。
 
 #### 第五关：工作模式
 
-基于S-AES算法，使用密码分组链(CBC)模式对较长的明文消息进行加密。
+在第五关卡，我们基于S-AES算法，使用密码分组链(CBC)模式对较长的明文消息进行加密。
 注意初始向量(16 bits) 的生成，并需要加解密双方共享。
 在CBC模式下进行加密，并尝试对密文分组进行替换或修改，
 然后进行解密，请对比篡改密文前后的解密结果。
+
+选择对应的CBC选项：
+
+![image](https://github.com/likiki180/DES/assets/143941355/6fc4a59c-5eb5-4f3a-ba22-a232d0f53954)
+
+
+按要求输入初始化向量，明文或者密文，密钥
+![image](https://github.com/likiki180/DES/assets/143941355/3f2d16b3-829d-4dcb-8521-a5a23eb135bb)
+
+
+
 
 
 ### S-DES 加解密系统开发手册
