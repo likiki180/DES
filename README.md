@@ -163,9 +163,6 @@
 
 
 
-
-
-
 #####4.2 中间相遇攻击假设你找到了使用相同密钥的明、密文对(一个或多个)，请尝试使用中间相遇攻击的方法找到正确的密钥Key(K1+K2)
 选择对应的中间相遇攻击选项：
 ![image](https://github.com/likiki180/DES/assets/143941355/935a84cb-c62c-431f-bed7-d3b2eefac80e)
@@ -215,15 +212,7 @@
 成功得到刚才的原文
 
 4.3测试通过
-
-
-
-
-
-
-
-
-第四关测试通过。
+第四关测试通过
 
 #### 第五关：工作模式
 
@@ -240,11 +229,38 @@
 按要求输入初始化向量，明文或者密文，密钥
 ![image](https://github.com/likiki180/DES/assets/143941355/3f2d16b3-829d-4dcb-8521-a5a23eb135bb)
 
+我们支持同时进行多组明文的加密
+明文：1010101011011010, 1010010110011101, 1010110111011010, 1010100110011101
+初始化向量：1100110011001100
+密钥：0100101011110101
+加密结果：
+0110100111001001
+1110111001110101
+0101100010011000
+0100101010001001
+
+
+![image](https://github.com/likiki180/DES/assets/143941355/6bc4d55c-acf1-42cf-a9fb-84f19d2529f8)
+
+对结果进行解密：
+![image](https://github.com/likiki180/DES/assets/143941355/0235238e-22fa-4909-bef2-c9825feca0e0)
+
+成功得到原来的密文，加解密成功
+
+我们调转密文块的分组顺序，下面演示篡改密文后的解密结果：
+![image](https://github.com/likiki180/DES/assets/143941355/5183adc8-d2ab-408f-aeff-26347ff67d6f)
+
+可以看出，篡改后生成的明文与之前不一致，说明密文被篡改后无法得到正确的明文。
+
+第五关测试通过，
+测试通过
 
 
 
 
-### S-DES 加解密系统开发手册
+
+
+### S-AES 加解密系统开发手册
 
 ## 1. 概述
 本系统采用c/s架构来实现S-AES加解密算法。它支持普通的加解密，ASCII码的加解密，以及多重加密，工作模式等功能。
@@ -465,7 +481,7 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
 ### 2.1 主要结构
 - **Logo容器**: 显示系统相关的logo。
 - **标题**: 显示系统的主标题。
-- **选项列表**: 用户可以选择二进制、ASCII或暴力破解。
+- **选项列表**: 用户可以选择二进制、ASCII或CBC、多重解密等等模式。
 - **输入部分**: 允许用户输入信息和密钥。
 - **信息容器**: 显示开发单位和开发者信息。
 
@@ -554,12 +570,12 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
         }
          /* 这个是输入字体控制 */
         .login-container input {
-            margin-bottom: 5px; /* reduce margin */
-            padding: 5px; /* reduce padding */
-            font-size: 0.8em; /* reduce font-size */
-            background: transparent; /* make input box transparent */
-            color: white; /* change text color to white */
-            border: none; /* remove input box border */
+            margin-bottom: 5px;
+            padding: 5px;
+            font-size: 0.8em;
+            background: transparent;
+            color: white;
+            border: none;
         }
          /* 这个是按钮控制 */
         .login-container button {
@@ -572,7 +588,7 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
              margin-bottom:30px;
 
         }
-        /* New CSS for website information */
+
                  /* 这个是底部字体 */
         .info-container {
             position: absolute;
@@ -580,8 +596,8 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
             width: 100%;
             text-align: center;
             padding: 10px 0;
-            background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
-            font-size: 0.2em; /* adjust font size */
+            background-color: rgba(0, 0, 0, 0.5);
+            font-size: 0.2em;
         }
     </style>
     <script>
@@ -605,6 +621,25 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
                 if (this.value === "brute_force") {
                     window.location.href = "/brute_force_page"; // 假设新的HTML页面的路由为"/brute_force_page"
                 }
+
+
+                if (this.value === "to_3")
+                {
+                    window.location.href = "/page3"; // 假设新的HTML页面的路由为"/brute_force_page"
+                }
+
+
+                if (this.value === "to_cbc")
+                {
+                    window.location.href = "/page_cbc"; // 假设新的HTML页面的路由为"/brute_force_page"
+                }
+
+
+                if (this.value === "to_attack")
+                {
+                    window.location.href = "/page_attack"; // 假设新的HTML页面的路由为"/brute_force_page"
+                }
+
             });
     document.getElementById('login-button2').onclick = function() {
         var username = document.getElementById('username-input').value;
@@ -633,7 +668,7 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
         <img src="/static/logo3.png" alt="Logo 3">
     </div>
     <div class="title">
-        S-DES加解密系统
+        S-AES加解密系统
     </div>
 
        <!-- 选项列表部分 -->
@@ -642,7 +677,10 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
         <select id="option-list">
             <option value="binary">二进制</option>
             <option value="asciil">ASCLL</option>
-             <option value="brute_force">暴力破解</option>
+             <option value="brute_force">二重加密</option>
+            <option value="to_3">三重加密</option>
+            <option value="to_cbc">CBC</option>
+            <option value="to_attack">中间相遇攻击</option>
         </select>
     </div>
 
@@ -651,13 +689,13 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
     <div class="login-container">
         <input id="username-input" type="text" placeholder="信息" required/>
 <!--        <input id="password-input" type="password" placeholder="密钥" required/>-->
-        <input id="password-input" type="text" placeholder="密钥(10bits)" required/>
+        <input id="password-input" type="text" placeholder="密钥(16bits)" required/>
         <button id="login-button">加密</button>
         <button id="login-button2">解密</button>
 
 
     </div>
-    <!-- New website information -->
+
     <div class="info-container">
         <p>所属单位：重庆大学大数据与软件学院  |   分工小组：RNG</p>
         <p>开发人员：吴科明 李泽坤   |  联系方式：1281673219@qq.com</p>
@@ -667,433 +705,16 @@ CBC模式的安全性部分依赖于初始向量的随机性，因此初始向�
 
 
 ```
-
-
-- **界面2的设计**: 选择暴力破解后，系统将跳转到另一页面。下面是该页面的html文件。
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-                body {
-            background-image: url("/static/lan_F.jpg");
-            background-size: cover;
-            color: white;
-            height: 50vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            margin: 0;
-            font-size: 3em;
-            font-family: Arial, sans-serif;
-
-        }
-
-        .logo-container {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            align-items: center;
-        }
-        .logo-container img {
-            height: 50px;
-            margin-right: 10px;
-        }
-        .title {
-
-            font-size: 1em;
-            margin-bottom:50px;
-            margin-top:200px;
-        }
-.select-container {
-    margin: 20px 0; /* 上下边距为20px, 左右边距为0 */
-    font-size: 40px; /* 字体大小为16px */
-    display: flex; /* 使用flex布局以使label和select在同一行 */
-    align-items: center; /* 垂直居中对齐内容 */
-}
-
-.select-container label {
-    margin-right: 10px; /* 在label和select之间增加10px的间距 */
-}
-
-.select-container select {
-    padding: 5px 10px; /* 选择框内部的填充：上下5px，左右10px */
-    border: 1px solid #cccccc; /* 给选择框一个灰色的边框 */
-    border-radius: 4px; /* 边框圆角为4px */
-}
-
-
-
-
-        .profile-container img {
-            width: 100%;
-            height: auto;
-        }
-        /* New CSS for login form */
-                /* 应该是灰框*/
-        .login-container {
-            display: flex;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
-            padding: 10px;  /* reduce padding */
-            border-radius: 5px;
-            font-size: 0.5em;
-
-              padding: 20px;  /* 增加内边距 */
-
-              width: 600px;  /* 增加宽度 */
-    height: auto;  /* 根据内容自适应高度 */
-
-
-        }
-         /* 这个是输入字体控制 */
-        .login-container input {
-            margin-bottom: 5px; /* reduce margin */
-            padding: 5px; /* reduce padding */
-            font-size: 0.8em; /* reduce font-size */
-            background: transparent; /* make input box transparent */
-            color: white; /* change text color to white */
-            border: none; /* remove input box border */
-        }
-         /* 这个是按钮控制 */
-        .login-container button {
-            padding: 5px;
-            background-color: lightblue;
-            color: black;
-            border: none;
-            cursor: pointer;
-            font-size: 0.5em; /* reduce font-size */
-             margin-bottom:30px;
-
-        }
-        /* New CSS for website information */
-                 /* 这个是底部字体 */
-        .info-container {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            padding: 10px 0;
-            background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
-            font-size: 0.2em; /* adjust font size */
-        }
-    </style>
-    <script>
-
-        window.onload = function() {
-
-
-    document.getElementById('login-button').onclick = function() {
-        var username = document.getElementById('username-input').value;
-        var password = document.getElementById('password-input').value;
-
-        fetch('/brute_force', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: username, password: password})
-        }).then(response => response.json())
-          .then(data => alert(data.message));
-    }
-}
-
-
-    </script>
-</head>
-<body>
-    <div class="logo-container">
-        <img src="/static/logo1.png" alt="Logo 1">
-
-        <img src="/static/logo3.png" alt="Logo 3">
-    </div>
-    <div class="title">
-        S-DES加解密暴力破解系统
-    </div>
-
-
-
-
-          <!-- 文本部分 -->
-    <div class="login-container">
-        <input id="username-input" type="text" placeholder="明文" required/>
-<!--        <input id="password-input" type="password" placeholder="密钥" required/>-->
-        <input id="password-input" type="text" placeholder="密文" required/>
-        <button id="login-button">开始破解</button>
-
-
-
-    </div>
-    <!-- New website information -->
-    <div class="info-container">
-        <p>所属单位：重庆大学大数据与软件学院  |   分工小组：RNG</p>
-        <p>开发人员：吴科明 李泽坤   |  联系方式：1281673219@qq.com</p>
-    </div>
-</body>
-</html>
-
-
-```
-## 3. 加解密算法
-
-### 3.1 辅助函数
-
-- **`permute(input_str, permutation_table)`**: 
-
-- 根据给定的置换表来进行置换。
-```python
-def permute(input_str, permutation_table):
-    output_str = ''
-    for bit_position in permutation_table:
-        output_str += input_str[bit_position - 1]
-    return output_str
-
-
-```
-- **`left_shift(key, n)`**: 将输入字符串的左半部分和右半部分分别左移`n`位。
-```python
-def left_shift(key, n):
-    left_half = key[:5]
-    right_half = key[5:]
-    shifted_left = left_half[n:] + left_half[:n]
-    shifted_right = right_half[n:] + right_half[:n]
-    return shifted_left + shifted_right
-
-```
-- **`generate_subkeys(key, p10_table, p8_table)`**: 根据给定的P10和P8表生成子密钥。
-```python
-
-def generate_subkeys(key, p10_table, p8_table):
-    p10_key = permute(key, p10_table)
-    key1 = permute(left_shift(p10_key, 1), p8_table)
-    key2 = permute(left_shift(left_shift(p10_key, 1), 1), p8_table)
-    return key1, key2
-
-```
-- **`f_function(right_half, subkey, sbox0, sbox1, p4_table)`**: 进行S-DES的F函数操作。
-```python
-
-def f_function(right_half, subkey, sbox0, sbox1, p4_table):
-    # Expansion and XOR
-    expanded = permute(right_half, EXPANSION_PERMUTATION)
-    xored = int(expanded, 2) ^ int(subkey, 2)
-    xored_str = format(xored, '08b')
-
-    # S-box substitutions
-    s0_input = xored_str[:4]
-    s1_input = xored_str[4:]
-    s0_row = int(s0_input[0] + s0_input[3], 2)
-    s0_col = int(s0_input[1:3], 2)
-    s1_row = int(s1_input[0] + s1_input[3], 2)
-    s1_col = int(s1_input[1:3], 2)
-    s0_output = format(sbox0[s0_row][s0_col], '02b')
-    s1_output = format(sbox1[s1_row][s1_col], '02b')
-    s_output = s0_output + s1_output
-
-    # Permutation
-    return permute(s_output, p4_table)
-
-```
-- **`ascii_to_binary(ascii_string)`**: 将ASCII字符串转换为二进制。
-```python
-
-def ascii_to_binary(ascii_string):
-    binary_string = ""
-    for character in ascii_string:
-        binary_string += bin(ord(character))[2:].zfill(8)
-    return binary_string
-
-```
-- **`binary_to_ascii(binary_string)`**: 将二进制转换为ASCII字符串。
-
-```python
-def binary_to_ascii(binary_string):
-    ascii_string = ""
-    for i in range(0, len(binary_string), 8):
-        ascii_string += chr(int(binary_string[i:i + 8], 2))
-    return ascii_string
-
-```
-
-### 3.2 加密
-**`encrypt(plaintext, key)`**: 使用给定的密钥对明文进行S-DES加密。
-
-```python
-def encrypt(plaintext, key):
-    key1, key2 = generate_subkeys(key, PERMUTATION_P10, PERMUTATION_P8)
-    plaintext = permute(plaintext, INITIAL_PERMUTATION)
-    left_half = plaintext[:4]
-    right_half = plaintext[4:]
-    left_previous = right_half
-    f_result = f_function(right_half, key1, SBOX0, SBOX1, PERMUTATION_P4)
-    right_half1_int = int(left_half, 2) ^ int(f_result, 2)
-    right_half1 = format(right_half1_int, '04b')
-    f_result = f_function(right_half1, key2, SBOX0, SBOX1, PERMUTATION_P4)
-    right_half2_int = int(left_previous, 2) ^ int(f_result, 2)
-    right_half2 = format(right_half2_int, '04b')
-    return permute(right_half2 + right_half1, INVERSE_INITIAL_PERMUTATION)
-
-
-```
-
-### 3.3 解密
-**`decrypt(ciphertext, key)`**: 使用给定的密钥对密文进行S-DES解密。
-
-```python
-def decrypt(ciphertext, key):
-    key1, key2 = generate_subkeys(key, PERMUTATION_P10, PERMUTATION_P8)
-    ciphertext = permute(ciphertext, INITIAL_PERMUTATION)
-    right_previous = ciphertext[:4]
-    left_previous = ciphertext[4:]
-    f_result = f_function(left_previous, key2, SBOX0, SBOX1, PERMUTATION_P4)
-    left_half1_int = int(right_previous, 2) ^ int(f_result, 2)
-    left_half1 = format(left_half1_int, '04b')
-    f_result = f_function(left_half1, key1, SBOX0, SBOX1, PERMUTATION_P4)
-    right_half1_int = int(left_previous, 2) ^ int(f_result, 2)
-    right_half1 = format(right_half1_int, '04b')
-    return permute(right_half1 + left_half1, INVERSE_INITIAL_PERMUTATION)
-
-```
-
-### 3.4 字符串加解密
-**`encrypt_string(ascii_string, key)`**: 对ASCII字符串进行加密。
-
-```python
-def encrypt_string(ascii_string, key):
-    binary_string = ascii_to_binary(ascii_string)
-    encrypted_string = ""
-    for i in range(0, len(binary_string), 8):
-        plaintext = binary_string[i:i + 8]
-        ciphertext = encrypt(plaintext, key)
-        encrypted_string += ciphertext
-    return encrypted_string
-
-
-```
-**`decrypt_string(encrypted_string, key)`**: 对已加密的字符串进行解密。
-
-```python
-def decrypt_string(encrypted_string, key):
-    decrypted_string = ""
-    for i in range(0, len(encrypted_string), 8):
-        ciphertext = encrypted_string[i:i + 8]
-        plaintext = decrypt(ciphertext, key)
-        decrypted_string += plaintext
-    return decrypted_string
-
-```
-
-
-## 4. 暴力破解
-**`BruteForceDecrypt`类**: 提供了单线程和多线程的暴力破解方法。
-
-- **`_brute_force(self, plaintext, ciphertext, start, end)`**: 单线程暴力破解方法，从start到end范围内尝试所有的密钥。
-
-```python
-
-class BruteForceDecrypt:
-
-    def __init__(self):
-        self.correct_keys = []
-        self.lock = threading.Lock()
-
-    def _brute_force(self, plaintext, ciphertext, start, end):
-        for key in range(start, end):
-            key_str = '{0:010b}'.format(key)
-            decrypted = decrypt(ciphertext, key_str)
-            if decrypted == plaintext and len(key_str) == 10:
-                with self.lock:
-                    self.correct_keys.append(key_str)
-
-    def single_thread_brute_force(self, plaintext, ciphertext):
-        self._brute_force(plaintext, ciphertext, 0, 2 ** 10)
-        return self.correct_keys
-
-    def multi_thread_brute_force(self, plaintext, ciphertext):
-        threads = []
-        for i in range(8):
-            start = i * (2 ** 9)
-            end = (i + 1) * (2 ** 9)
-            thread = threading.Thread(target=self._brute_force, args=(plaintext, ciphertext, start, end))
-            thread.start()
-            threads.append(thread)
-        for thread in threads:
-            thread.join()
-        return self.correct_keys
-
-    def decrypt(self, plaintext, ciphertext):
-        start_time = time.time()
-        single_result = self.single_thread_brute_force(plaintext, ciphertext)
-        single_time = time.time() - start_time
-        self.correct_keys.clear()
-        start_time = time.time()
-        multi_result = self.multi_thread_brute_force(plaintext, ciphertext)
-        multi_time = time.time() - start_time
-        return {
-            "single_thread": {
-                "keys": single_result,
-                "time": single_time
-            },
-            "multi_thread": {
-                "keys": multi_result,
-                "time": multi_time
-            }
-        }
-
-
-```
-
-
-
-- **`multi_thread_brute_force(self, plaintext, ciphertext)`**: 多线程暴力破解接口，使用8个线程进行破解。
-
-```python
-def multi_thread_brute_force(plaintext, ciphertext):
-    threads = []
-    for i in range(8):
-        start = i * (2 ** 9)
-        end = (i + 1) * (2 ** 9)
-        thread = threading.Thread(target=brute_force, args=(plaintext, ciphertext, start, end))
-        thread.start()
-        threads.append(thread)
-    # 等待所有线程完成
-    for thread in threads:
-        thread.join()
-```
-
-
-
 
 
 ## 5. 使用指南
 
-### 5.1 S-DES算法介绍
-
-S-DES（Simplified Data Encryption Standard）是一个供教学而非安全使用的加密算法。它与DES的特性和结构类似，但参数小，明文分组为8位，主密钥分组为10位，采用两轮迭代。
-
-S-DES加密过程包含两个重要部分：子密码生成过程和f函数结构。
-
-子密码生成过程：
-- 对初始密钥进行P10置换，将置换后的结果分为左右两部分，各5位。
-- 对左右两部分进行循环左移操作和P8置换，得到K1。
-- 再次对上一步结果进行循环左移操作和P8置换，得到K2。
-
-f函数结构：
-- 对右半部分进行E/P扩展置换，将其扩展为8位。
-- 对扩展后的结果与轮密钥进行异或运算，再将异或的结果拆分成2个4位的块。
-- 将这2个块分别通过S盒代替（S0和S1），然后再进行P4置换，最后将P4置换后的结果与左半部分进行异或，得到F函数输出的结果。
-
-### 5.2 使用步骤
 
 1. 打开S-DES加解密系统主页。
-2. 选择所需的操作类型：二进制、ASCII或暴力破解。
-3. 输入信息和10位的密钥。如果输入不合法会报错。
+2. 选择所需的操作类型：二进制、ASCII或多重加密、CBC模式等。
+3. 按照提示输入信息和对应的的密钥。如果输入不合法会报错。
 4. 点击“加密”或“解密”按钮以进行相应操作。
-5. 若选择了暴力破解，则系统会尝试所有可能的密钥，直到找到正确的密钥为止。这个过程可能需要一些时间，具体取决于你的计算机性能和你选择的明文和密文对的数量，并在完成后查看找到的正确密钥。
-6. 如果你选择了ASCII模式，那么你输入的信息应该是一个ASCII编码的字符串，而输出也将是一个ASCII编码的字符串。请注意，由于S-DES算法会对数据进行各种复杂的变换，所以加密后得到的字符串可能包含一些无法打印或无法显示的字符（即所谓的"乱码"）。但这并不影响解密过程。只要知道正确的密钥，就可以使用S-DES算法将这个"乱码"字符串解密回原始字符串。
+5. 如果你选择了ASCII模式，那么你输入的信息应该是一个ASCII编码的字符串，而输出也将是一个ASCII编码的字符串。请注意，由于S-DES算法会对数据进行各种复杂的变换，所以加密后得到的字符串可能包含一些无法打印或无法显示的字符（即所谓的"乱码"）。但这并不影响解密过程。只要知道正确的密钥，就可以使用S-DES算法将这个"乱码"字符串解密回原始字符串。
 
 ## 6. 联系信息
 若有任何疑问或建议，请联系开发团队：1281673219@qq.com
